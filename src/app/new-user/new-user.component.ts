@@ -33,7 +33,7 @@ export class NewUserComponent implements OnInit {
   onSubmitForm() {
     const formValue = this.userForm.value;
 
-
+    const a = 0;
     const newUser = new User(
       formValue['firstName'],
       formValue['lastName'],

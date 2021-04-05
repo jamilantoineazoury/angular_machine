@@ -16,5 +16,7 @@
             (click)="onAllumer($event.target)">Tout allumer</button>
         <button style="margin-right: 10px; margin-bottom: 10px;" class="btn btn-danger" [disabled]="!isAuth"
             (click)="onEteindre($event.target)">Tout Eteindre</button>
+        <button class="btn btn-success" (click)="onSave()">Enregistrer</button>
+        <button class="btn btn-primary" (click)="onFetch()">Charger</button>
     </div>
 </div>

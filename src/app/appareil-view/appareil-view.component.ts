@@ -1,6 +1,8 @@
+import { AppareilService } from './../services/appareil.servicre';
 import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { AppareilService } from '../services/appareil.servicre';
+
+
 
 @Component({
   selector: 'app-appareil-view',
@@ -47,7 +49,7 @@ export class AppareilViewComponent implements OnInit {
         this.appareils = appareils;
       }
     );
-    this.appareilService.emitAppareilSubject();
+    //this.appareilService.emitAppareilSubject();
   }
 
   onAllumer(element: any) {
@@ -56,6 +58,20 @@ export class AppareilViewComponent implements OnInit {
   onEteindre(element: any) {
     this.appareilService.switchOffAll();
   }
+  onSave() {
+    this.appareilService.saveAppareilTopServer();
+  }
+
+
+  onFetch() {
+    this.appareilService.getAppareilFromServer();
+  }
+
+
+
+
+
+
   // onAllumer(element: any) {
   //   if (this.temp == 0) {
   //     this.temp = 1;

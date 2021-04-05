@@ -1,6 +1,9 @@
 import { AppareilComponent } from './../appareil/appareil.component';
 import { Subject } from "rxjs/internal/Subject";
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class AppareilService {
     appareilSubject = new Subject<any[]>();
 
@@ -10,20 +13,12 @@ export class AppareilService {
             name: 'machine a laver',
             status: 'allumé'
 
-        },
-        {
-            id: 2,
-            name: 'television',
-            status: 'allumé'
-
-        },
-        {
-            id: 3,
-            name: 'ordianteur',
-            status: 'eteint'
-
         }
     ];
+
+    constructor(private httpClient: HttpClient) {
+
+    }
 
     emitAppareilSubject() {
         this.appareilSubject.next(this.appareils.slice()); //slice pour emettre une copie
@@ -78,6 +73,33 @@ export class AppareilService {
 
         this.appareils.push(appareilObject);
         this.emitAppareilSubject();
+    }
+
+    saveAppareilTopServer() {
+        //  this.httpClient.post('https://http-client-demo-8688c-default-rtdb.europe-west1.firebasedatabase.app/appareils.json', this.appareils).subscribe(
+        this.httpClient.put('https://http-client-demo-8688c-default-rtdb.europe-west1.firebasedatabase.app/appareils.json', this.appareils).subscribe(
+
+            () => {
+                console.log('Enregistrement terminé');
+            },
+            (error) => {
+                console.log('Erreur de sauvgard!' + error);
+            }
+        )
+    }
+
+    getAppareilFromServer() {
+
+        this.httpClient.get<any[]>('https://http-client-demo-8688c-default-rtdb.europe-west1.firebasedatabase.app/appareils.json').subscribe(
+            (reponse) => {
+                this.appareils = reponse;
+                this.emitAppareilSubject();
+            },
+            (error) => {
+                console.log('erreur de chargement' + error);
+            }
+        );
+
     }
 
 }
